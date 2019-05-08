@@ -6,7 +6,7 @@ import requests
 import time
 import os
 
-TIMES_TO_TEST = 9 #50 bc index starts @ 0
+TIMES_TO_TEST = 49 #50 bc index starts @ 0
 
 headers = {
     'Content-Type': 'text/xml',
