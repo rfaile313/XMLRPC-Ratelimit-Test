@@ -41,14 +41,14 @@ def test_rate(times_to_run, url):
     print ("Done. {} Requests made. Time elapsed: {} Seconds.".format(current_iteration, (total_time)))
 
     text_file = ask_yes_no("Would you like to send the results to a text file? [y/n]: ")
-    if text_file == 'y' or 'yes':
+    if text_file == 'y' or text_file == 'yes':
         with open("results{}.txt".format(total_time), "w") as file:
             file.write("Ratelimit Test for {}:\n".format(url))
             for item in results:
                 file.write("{}\n".format(item))
             file.write("============ End of Test ===========")
             file.close()
-        print("results{}.txt written at {}".format(total_time, os.getcwd()))
+            print("results{}.txt written at {}".format(total_time, os.getcwd()))
     else:
         pass        
 
@@ -65,6 +65,8 @@ def response_codes(response):
         string_response = string_response + " OK"
     elif "405" in string_response:
         string_response = string_response + " 405 Method Not Allowed. Are you using HTTP? Try HTTPS."
+    elif "404" in string_response:
+        string_response = string_response + " 404 Page not found"
     elif "40" in string_response:
         string_response = string_response + " 4xx Client Error"
     elif "50" in string_response:
