@@ -7,6 +7,8 @@ import time
 import os
 
 TIMES_TO_TEST = 49 #50 bc index starts @ 0
+TIMED_OUT = "Request took longer than a minute to complete. Timed out."
+RATELIMIT = "Ratelimit test for:"
 
 headers = {
     'Content-Type': 'text/xml',
@@ -29,24 +31,38 @@ def test_rate(times_to_run, url):
     current_iteration = 0
     start_time = time.time()
     results = []
-    print("Starting ratelimit test:")
+    print(RATELIMIT, url)
     while current_iteration <= times_to_run:
         response = requests.post('{}/xmlrpc.php'.format(url), headers=headers, data=data)
         string_response = response_codes(response)
         print(string_response)
         results.append(string_response)
         current_iteration += 1
+        ### This section checks to see if its been longer than a minute, then times out. 
+        current_time = time.time()
+        check_time = str(round((current_time - start_time), 2))
+        float_time = float(check_time)
+        if float_time >= 60:
+            print(TIMED_OUT)
+            break
+        ### End timeout check
     end_time = time.time()
     total_time = str(round((end_time - start_time), 2))
-    print ("Done. {} Requests made. Time elapsed: {} Seconds.".format(current_iteration, (total_time)))
+    ending_information = "Done. {} Requests made. Time elapsed: {} Seconds.".format(current_iteration, (total_time))
+    print (ending_information)
 
+    ## Ask/Write to file
     text_file = ask_yes_no("Would you like to send the results to a text file? [y/n]: ")
     if text_file == 'y' or text_file == 'yes':
         with open("results{}.txt".format(total_time), "w") as file:
             file.write("Ratelimit Test for {}:\n".format(url))
             for item in results:
                 file.write("{}\n".format(item))
-            file.write("============ End of Test ===========")
+            ## timeout check
+            if float_time >= 60:
+                file.write("\n {}".format(TIMED_OUT))
+            file.write(ending_information)
+            file.write("\n============ End of Test ===========")
             file.close()
             print("results{}.txt written at {}".format(total_time, os.getcwd()))
     else:
