@@ -27,7 +27,7 @@ def detect_https(url):
     else:
         return url + '/xmlrpc.php'
   
-URL = detect_https(input("Enter the URL. Exmaple: https://example.com \nURL:"))
+URL = detect_https(input("Enter the URL. Example: https://example.com \nURL:"))
 
 def test_rate(url):
     start_time = time.time()
