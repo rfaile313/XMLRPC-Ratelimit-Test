@@ -8,9 +8,7 @@ A Handy tool for checking if a host is limiting the request rate to a site's XML
 1) `git clone https://github.com/rfaile313/XMLRPC-Ratelimit-Test.git`
 2) `cd XMLRPC-Ratelimit-Test`
 
-3) 
-
-`python3 ratelimit.py` asks for URL once run
+3) `python3 ratelimit.py` asks for URL once run
 
 or 
 
