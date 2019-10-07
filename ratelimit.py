@@ -33,7 +33,8 @@ def detect_https(url):
 try:
     URL = detect_https(sys.argv[1])
 except IndexError:
-    #no argument provided
+    #no argument provided // can probably add a more _verbose_ error catching here
+    #for now it'll just default to asking for input if a flag isn't provided in terminal.
     URL = detect_https(input("Enter the URL. Example: https://example.com \nURL:"))
 
 def test_rate(url):
