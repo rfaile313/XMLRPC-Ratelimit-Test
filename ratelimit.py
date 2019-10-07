@@ -4,6 +4,7 @@ __author__ = "@rfaile313"
 
 import requests
 import time
+import sys
 import os
 
 TIMES_TO_TEST = 50 
@@ -19,6 +20,7 @@ data = {
   '<?xml version': '"1.0"?><methodCall><methodName>demo.sayHello</methodName><params></params></methodCall>'
 }
 
+#some very basic error handling for URL structure
 def detect_https(url):
     if "http" not in url and '/xmlrpc.php' not in url:
         return "https://{}/xmlrpc.php".format(url)
@@ -26,8 +28,13 @@ def detect_https(url):
         return "https://{}".format(url)
     else:
         return url + '/xmlrpc.php'
-  
-URL = detect_https(input("Enter the URL. Example: https://example.com \nURL:"))
+
+#detects if a URL is appended as a flag in the terminal, otherwise asks for it
+try:
+    URL = detect_https(sys.argv[1])
+except IndexError:
+    #no argument provided
+    URL = detect_https(input("Enter the URL. Example: https://example.com \nURL:"))
 
 def test_rate(url):
     start_time = time.time()
