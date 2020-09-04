@@ -1,3 +1,9 @@
+** Warning ** 
+
+This script is outdated. The latest build lives as a web app at:
+
+https://ratelimit.rudyfaile.com
+
 # XMLRPC Ratelimit Test
 A Handy tool for checking if a host is limiting the request rate to a site's XMLRPC file
 
